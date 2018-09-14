@@ -8,7 +8,6 @@ import java.io.IOException;
 
 public class DefaultRequestSender implements RequestSender {
 
-
     private DefaultConfigLoader loader;
 
     public DefaultRequestSender(DefaultConfigLoader loader) {
@@ -17,7 +16,8 @@ public class DefaultRequestSender implements RequestSender {
 
     @Override
     public Document sendRequest(String search) {
-        String searchUrl = loader.getBaseSearchUrl() + "?q=" + search;
+        System.out.println("Please wait...");
+        String searchUrl = loader.getBaseSearchUrl() + search;
         Document doc = null;
         try {
             doc = Jsoup.connect(searchUrl).userAgent("Mozilla/5.0")

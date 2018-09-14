@@ -19,6 +19,14 @@ public class DefaultElementExtractor {
         this.results = new ArrayList<>(loader.getFirstResults());
     }
 
+    /**
+     * Getting specific html tag from document and returning
+     * result list which contain titles and links.
+     *
+     * @param document html document
+     * @return list of objects which containing title and link
+     */
+
     public List<Result> extract(Document document) {
         Elements elements = document.select(loader.getSearchedElement());
         final int firstElements = loader.getFirstResults();
@@ -33,6 +41,12 @@ public class DefaultElementExtractor {
         return getResults();
     }
 
+    /**
+     * Extract link from html tag and remove all unnecessary.
+     *
+     * @param element html tag element
+     * @return link pure string
+     */
     private String getLink(Element element) {
         String result = element.attr("href");
         int endLink;
@@ -49,6 +63,9 @@ public class DefaultElementExtractor {
         return element.text();
     }
 
+    /**
+     * @return list of objects which containing title and link
+     */
     public List<Result> getResults() {
         return results;
     }

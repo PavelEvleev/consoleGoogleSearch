@@ -27,12 +27,10 @@ public class DefaultConfigLoader {
     public DefaultConfigLoader init() {
 
         changeEncodingForOs();
-
         Properties prop = new Properties();
 
         try (InputStream input = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE)) {
             prop.load(input);
-
             getBaseUrl(prop, QueryConstants.BASE_SEARCH_URL);
             getFirstNumbersOfResult(prop, QueryConstants.FIRST_TOP_RESULT);
             getSearchedElement(prop, QueryConstants.SEARCHED_ELEMENT);
@@ -59,10 +57,12 @@ public class DefaultConfigLoader {
         this.searchedElement = prop.getProperty(propertyKey.getValue());
     }
 
+    /**
+     * The method required to determine the operating system
+     * and specifies the specific encoding for console I / O by default.
+     */
     private void changeEncodingForOs() {
-        String os = System.getProperty("os.name");
-        System.out.println("You run app under " + os);
-        if (os.startsWith("Windows")) {
+        if (System.getProperty("os.name").startsWith("Windows")) {
             try {
                 System.setOut(new PrintStream(System.out, true, "cp866"));
                 this.scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in, "cp866")));

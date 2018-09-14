@@ -20,9 +20,9 @@ public class DefaultBrowserAsk implements BrowserAsk {
         this.displayResult = loader.getDisplayResult();
     }
 
-    private boolean checkAnswer(String answer) {
-        final String AGAIN_US = "y";
-        final String AGAIN_RU = "д";
+    private boolean isAgain(String answer) {
+        String AGAIN_US = "y";
+        String AGAIN_RU = "д";
         return answer.equalsIgnoreCase(AGAIN_RU) || answer.equalsIgnoreCase(AGAIN_US);
     }
 
@@ -34,14 +34,12 @@ public class DefaultBrowserAsk implements BrowserAsk {
 
             String search = loader.getScanner().nextLine().replace(' ', '+');
 
-            System.out.println(search);
-
             displayResult.print(extractor.extract(requestSender.sendRequest(search)));
 
             System.out.println("Do you want search something else? y/n or д/н");
 
             answer = loader.getScanner().nextLine();
 
-        } while (checkAnswer(answer));
+        } while (isAgain(answer));
     }
 }
