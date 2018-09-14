@@ -2,11 +2,10 @@ package by.pavel;
 
 
 import by.pavel.config.DefaultConfigLoader;
-import by.pavel.service.DefaultElementExtractor;
-import by.pavel.service.DefaultRequestSender;
-import by.pavel.service.RequestSender;
+import by.pavel.service.*;
 import by.pavel.view.DefaultDisplayResult;
 import by.pavel.view.DisplayResult;
+import by.pavel.view.StyledDisplayResult;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -15,22 +14,15 @@ public class Runner {
 
     public static void main(String[] args) throws IOException {
 
-//        String search = String.join(" ", args);
-
-        Scanner in = new Scanner(System.in);
-        System.out.println("Введите поисквой запрос");
-
-        String search = in.nextLine();
-
         DefaultConfigLoader loader = new DefaultConfigLoader().init();
 
-        RequestSender requestSender = new DefaultRequestSender(loader);
+        System.out.println("Hello, it`s simple app for searching first results in Google.");
 
-        DefaultElementExtractor extractor = new DefaultElementExtractor(loader, requestSender.sendRequest(search));
+        loader.selectViewForDisplay();
 
-        DisplayResult displayResult = new DefaultDisplayResult();
+        BrowserAsk requester = new DefaultBrowserAsk(loader);
 
-        displayResult.print(extractor.getResults());
+        requester.newSearch();
 
     }
 }

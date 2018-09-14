@@ -14,18 +14,20 @@ public class DefaultElementExtractor {
     private List<Result> results;
     private DefaultConfigLoader loader;
 
-    public DefaultElementExtractor(DefaultConfigLoader loader, Document document) {
-        this.results = new ArrayList<>();
+    public DefaultElementExtractor(DefaultConfigLoader loader) {
         this.loader = loader;
-        init(document);
     }
 
-    private void init(Document document) {
+    public List<Result> extract(Document document) {
         Elements elements = document.select(loader.getSearchedElement());
-        final int firstElement = loader.getFirstResults();
-        for (int i = 0; i < firstElement; i++) {
+        final int firstElements = loader.getFirstResults();
+
+        this.results = new ArrayList<>(firstElements);
+
+        for (int i = 0; i < firstElements; i++) {
             this.results.add(new Result(getLink(elements.get(i)), getTitle(elements.get(i))));
         }
+        return getResults();
     }
 
     private String getLink(Element element) {
