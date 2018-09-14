@@ -1,2 +1,2 @@
 # consoleGoogleSearch
-simlple app for geting top results from search in google
+simple app for getting top results from search in google
