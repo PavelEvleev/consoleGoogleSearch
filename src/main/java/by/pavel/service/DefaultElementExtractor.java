@@ -27,7 +27,7 @@ public class DefaultElementExtractor {
         }
 
         for (int i = 0; i < firstElements; i++) {
-            this.results.add(i, new Result(getLink(elements.get(i)), getTitle(elements.get(i))));
+            this.results.add(new Result(getLink(elements.get(i)), getTitle(elements.get(i))));
         }
 
         return getResults();
