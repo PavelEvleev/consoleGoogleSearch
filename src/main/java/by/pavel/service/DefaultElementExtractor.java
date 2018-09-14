@@ -16,17 +16,20 @@ public class DefaultElementExtractor {
 
     public DefaultElementExtractor(DefaultConfigLoader loader) {
         this.loader = loader;
+        this.results = new ArrayList<>(loader.getFirstResults());
     }
 
     public List<Result> extract(Document document) {
         Elements elements = document.select(loader.getSearchedElement());
         final int firstElements = loader.getFirstResults();
-
-        this.results = new ArrayList<>(firstElements);
+        if (this.results.size() > 0) {
+            this.results.clear();
+        }
 
         for (int i = 0; i < firstElements; i++) {
-            this.results.add(new Result(getLink(elements.get(i)), getTitle(elements.get(i))));
+            this.results.add(i, new Result(getLink(elements.get(i)), getTitle(elements.get(i))));
         }
+
         return getResults();
     }
 

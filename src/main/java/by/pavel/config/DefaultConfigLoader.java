@@ -60,7 +60,9 @@ public class DefaultConfigLoader {
     }
 
     private void changeEncodingForOs() {
-        if (System.getProperty("os.name").equals("Windows")) {
+        String os = System.getProperty("os.name");
+        System.out.println("You run app under " + os);
+        if (os.startsWith("Windows")) {
             try {
                 System.setOut(new PrintStream(System.out, true, "cp866"));
                 this.scanner = new Scanner(new BufferedReader(new InputStreamReader(System.in, "cp866")));
