@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DisplayResult {
 
-    void print(List<Result> results);
+    void print(Result[] results);
 }

@@ -2,11 +2,9 @@ package by.pavel.view;
 
 import by.pavel.data.Result;
 
-import java.util.List;
-
 public class StyledDisplayResult implements DisplayResult {
 
-    public void print(List<Result> results) {
+    public void print(Result[] results) {
 
         String separator = "---------------------------------";
         System.out.println(separator);
