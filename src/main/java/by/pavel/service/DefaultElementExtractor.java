@@ -1,6 +1,5 @@
 package by.pavel.service;
 
-import by.pavel.config.DefaultConfigLoader;
 import by.pavel.data.Result;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,11 +8,14 @@ import org.jsoup.select.Elements;
 public class DefaultElementExtractor {
 
     private Result[] results;
-    private DefaultConfigLoader loader;
+    private int firstResults;
+    private String searchedElement;
 
-    public DefaultElementExtractor(DefaultConfigLoader loader) {
-        this.loader = loader;
-        this.results = new Result[loader.getFirstResults()];
+    public DefaultElementExtractor(int firstResults, String searchedElement) {
+        this.searchedElement = searchedElement;
+        this.firstResults = firstResults;
+        this.results = new Result[firstResults];
+
     }
 
     /**
@@ -25,14 +27,15 @@ public class DefaultElementExtractor {
      */
 
     public Result[] extract(Document document) {
-        Elements elements = document.select(loader.getSearchedElement());
+        Elements elements = document.select(this.searchedElement);
 
-        for (int i = 0; i < loader.getFirstResults(); i++) {
-            if (this.results[i] != null) {
-                this.results[i].setTitle(getLink(elements.get(i)));
-                this.results[i].setLink(getTitle(elements.get(i)));
+        for (int i = 0; i < this.firstResults; i++) {
+            if (this.results[i] == null) {
+                this.results[i] = new Result(getLink(elements.get(i)), getTitle(elements.get(i)));
+                continue;
             }
-            this.results[i] = new Result(getLink(elements.get(i)), getTitle(elements.get(i)));
+            this.results[i].setTitle(getTitle(elements.get(i)));
+            this.results[i].setLink(getLink(elements.get(i)));
         }
 
         return getResults();

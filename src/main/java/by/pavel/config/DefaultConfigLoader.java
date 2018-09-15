@@ -95,28 +95,28 @@ public class DefaultConfigLoader {
     }
 
     public DisplayResult selectViewForDisplay() {
-        int result;
-
+        String result;
         do {
-            System.out.println("How would you like see the result: default(1) or styled(2)?");
-            result = Integer.parseInt(getScanner().nextLine());
+            System.out.println("How would you like see the result: 1 - default or 2 - styled?");
+            result = getScanner().nextLine();
 
             switch (result) {
-                case 1:
+                case "default":
+                case "1":
                     this.displayResult = new DefaultDisplayResult();
                     break;
-                case 2:
+                case "styled":
+                case "2":
                     this.displayResult = new StyledDisplayResult();
                     break;
                 default:
-                    result = 0;
+                    result = "";
                     System.out.println("Sorry, but we haven`t that answer./n" +
                             "Please, try again.");
                     break;
             }
         }
-        while (result == 0);
-
+        while (result.isEmpty());
         return getDisplayResult();
     }
 

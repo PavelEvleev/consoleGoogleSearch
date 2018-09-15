@@ -4,5 +4,5 @@ import org.jsoup.nodes.Document;
 
 public interface RequestSender {
 
-    Document sendRequest(String search);
+    Document sendRequest(String search, String url, String acceptLanguage);
 }

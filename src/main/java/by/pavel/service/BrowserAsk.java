@@ -2,5 +2,5 @@ package by.pavel.service;
 
 public interface BrowserAsk {
 
-    void newSearch();
+    void newSearch(String url, String acceptLanguage);
 }

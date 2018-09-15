@@ -2,8 +2,7 @@ package by.pavel;
 
 
 import by.pavel.config.DefaultConfigLoader;
-import by.pavel.service.BrowserAsk;
-import by.pavel.service.DefaultBrowserAsk;
+import by.pavel.service.*;
 
 import java.io.IOException;
 
@@ -17,9 +16,15 @@ public class Runner {
 
         loader.selectViewForDisplay();
 
-        BrowserAsk requester = new DefaultBrowserAsk(loader);
+        RequestSender requestSender = new DefaultRequestSender();
 
-        requester.newSearch();
+        DefaultElementExtractor extractor = new DefaultElementExtractor(
+                loader.getFirstResults(),
+                loader.getSearchedElement());
+
+        BrowserAsk requester = new DefaultBrowserAsk(loader.getScanner(), requestSender, extractor, loader.getDisplayResult());
+
+        requester.newSearch(loader.getBaseSearchUrl(), loader.getAcceptLanguage());
 
     }
 }
