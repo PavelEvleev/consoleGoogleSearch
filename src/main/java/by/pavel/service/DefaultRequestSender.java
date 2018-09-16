@@ -8,7 +8,7 @@ import java.io.IOException;
 public class DefaultRequestSender implements RequestSender {
     @Override
     public Document sendRequest(String search, String url, String acceptLanguage) {
-        System.out.println("Please wait...");
+
         String searchUrl = url + search;
         Document doc = null;
         try {

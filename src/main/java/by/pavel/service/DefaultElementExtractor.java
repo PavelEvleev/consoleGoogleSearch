@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.NoSuchElementException;
+
 public class DefaultElementExtractor {
 
     private Result[] results;
@@ -18,6 +20,15 @@ public class DefaultElementExtractor {
 
     }
 
+    private Elements selectElements(Document document) throws NoSuchElementException {
+        Elements elements = document.select(this.searchedElement);
+        if(elements.isEmpty()){
+            throw new NoSuchElementException("Nothing found.");
+        }
+        return elements;
+
+    }
+
     /**
      * Getting specific html tag from document and returning
      * result list which contain titles and links.
@@ -25,9 +36,8 @@ public class DefaultElementExtractor {
      * @param document html document
      * @return list of objects which containing title and link
      */
-
-    public Result[] extract(Document document) {
-        Elements elements = document.select(this.searchedElement);
+    public Result[] extract(Document document) throws NoSuchElementException{
+        Elements elements = selectElements(document);
 
         for (int i = 0; i < this.firstResults; i++) {
             if (this.results[i] == null) {

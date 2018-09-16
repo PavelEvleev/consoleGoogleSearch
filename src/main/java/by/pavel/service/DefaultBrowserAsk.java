@@ -1,7 +1,9 @@
 package by.pavel.service;
 
+import by.pavel.data.Result;
 import by.pavel.view.DisplayResult;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class DefaultBrowserAsk implements BrowserAsk {
@@ -43,15 +45,22 @@ public class DefaultBrowserAsk implements BrowserAsk {
 
     @Override
     public void newSearch(String url, String acceptLanguage) {
-        String answer;
+        String answer = "y";
         do {
             String search = inputSearch();
 
-            displayResult.print(extractor.extract(requestSender.sendRequest(search, url, acceptLanguage)));
+            try {
+                System.out.println("Please wait...");
 
-            System.out.println("Do you want search something else? y/n or д/н");
+                Result[] results = extractor.extract(requestSender.sendRequest(search, url, acceptLanguage));
+                displayResult.print(results);
+                System.out.println("Do you want search something else? y/n or д/н");
 
-            answer = scanner.nextLine();
+                answer = scanner.nextLine();
+            } catch (NoSuchElementException e) {
+                System.out.println(e.getMessage() + " Sorry, try again.");
+            }
+
         } while (isAgain(answer));
     }
 }
